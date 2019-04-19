@@ -14,8 +14,7 @@ New-Item -Name build\package\solr -ItemType directory
 New-Item -Name build\package\App_Config\Include\Foundation -ItemType directory
 
 Copy-Item .\src\Foundation\Solr.Proxy\code\bin\Foundation.SorlProxy* .\build\package\bin
-Copy-Item .\src\Foundation\Solr.Proxy\code\solr\Web.config .\build\package\solr
-Copy-Item .\src\Foundation\Solr.Proxy\code\App_Config\Include\Foundation\Foundation.SolrProxy.config .\build\package\App_Config\Include\Foundation
+Copy-Item .\src\Foundation\Solr.Proxy\code\App_Config\Include\Foundation\Foundation.Solr.Proxy.config .\build\package\App_Config\Include\Foundation
 Copy-Item .\src\Foundation\Solr.Proxy\serialization\* .\build\package\Data -recurse
 
 $packageCmd = "Sitecore.Courier.Runner.exe -t build\package -o build\artifacts\sitecore.solrproxy." + $version + ".update -r"

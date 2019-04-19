@@ -6,7 +6,7 @@ namespace Foundation.SorlProxy
 {
     public class Proxy
     {
-        public void GetSolrResponse(ref HttpContext context)
+        public bool GetSolrResponse(ref HttpContext context)
         {
             var path = context.Request.Url.PathAndQuery;
             if (path.StartsWith("/solr"))
@@ -27,7 +27,7 @@ namespace Foundation.SorlProxy
                     context.Response.Write("<h2>Page not found</h2>");
                     context.Response.End();
                     
-                    return;
+                    return true;
                 }
 
                 Stream receiveStream = response.GetResponseStream();
@@ -46,8 +46,10 @@ namespace Foundation.SorlProxy
                 context.Response.ContentType = response.ContentType;
                 context.Response.End();
 
-
+                return true;
             }
+
+            return false;
         }
 
         private string GetSolrServer()
