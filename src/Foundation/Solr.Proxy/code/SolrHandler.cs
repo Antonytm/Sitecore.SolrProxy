@@ -1,6 +1,6 @@
 ﻿using System.Web;
 
-namespace Foundation.CSSGridLayout
+namespace Foundation.SorlProxy
 {
     public class SolrHandler:IHttpHandler
     {
