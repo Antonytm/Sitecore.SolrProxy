@@ -15,7 +15,6 @@ namespace Foundation.CSSGridLayout
             {
                 var remoteUrl = $"{GetSolrServer()}{path}";
                 HttpWebRequest request = (HttpWebRequest) WebRequest.Create(remoteUrl);
-                //request.Credentials = CredentialCache.DefaultCredentials;
                 HttpWebResponse response;
                 try
                 {
@@ -23,18 +22,19 @@ namespace Foundation.CSSGridLayout
                 }
                 catch (System.Net.WebException we)
                 {
+                    Sitecore.Diagnostics.Log.Error($"Unable to get response from Solr server", we, this);
                     //remote url not found, send 404 to client 
                     context.Response.StatusCode = 404;
                     context.Response.StatusDescription = "Not Found";
                     context.Response.Write("<h2>Page not found</h2>");
                     context.Response.End();
+                    
                     return;
                 }
 
                 Stream receiveStream = response.GetResponseStream();
 
 
-                //the response is not HTML 
                 var buff = new byte[1024];
                 int bytes = 0;
                 while ((bytes = receiveStream.Read(buff, 0, 1024)) > 0)
