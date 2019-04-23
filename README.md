@@ -28,3 +28,16 @@ By default module injects to HttpRequestBegin pipeline. But you can reconfigure 
         `<add verb="*" path="solr/*" type="Foundation.SorlProxy.SolrHandler, Foundation.SorlProxy" name ="SolrHandler" />`
 5. Add *"/solr"* to IgnoreUrlPrefixes Sitecore setting (*Sitecore.config Sitecore>Settings>Setting[name="IgnoreUrlPrefixes"]*)
 6. Disable *Foundation.Solr.Proxy.config* configuration file
+
+
+## Possible issues
+
+1. If nothing happened after installation of package(/solr/ url doesn't work), check that *App_Config\Include\Foundation\Foundation.Solr.Proxy.config* configuration is enabled
+2. If you get "Too many redirects" then you have conflict with Solr console that requires trailing slash and your rewrite rules that force no trailing slash. Add rule that disable redirects for Solr console:
+
+```
+<rule name="Dont redirect Solr" stopProcessing="true">
+  <match url="^solr(.*)" />
+  <action type="None" />
+</rule>
+```
