@@ -9,18 +9,17 @@ namespace Foundation.SorlProxy
     {
         public bool GetSolrResponse(ref HttpContext context)
         {
-            if (Sitecore.Context.User.IsInRole(@"sitecore\Developer") || Sitecore.Context.IsAdministrator)
+            var path = context.Request.Url.PathAndQuery;
+            if (path.StartsWith("/solr", StringComparison.InvariantCultureIgnoreCase))
             {
-                var path = context.Request.Url.PathAndQuery;
-
-                if (path.Equals("/solr", StringComparison.InvariantCultureIgnoreCase))
+                if (Sitecore.Context.User.IsInRole(@"sitecore\Developer") || Sitecore.Context.IsAdministrator)
                 {
-                    context.Response.Redirect("/solr/");
-                    context.Response.End();
-                }
+                    if (path.Equals("/solr", StringComparison.InvariantCultureIgnoreCase))
+                    {
+                        context.Response.Redirect("/solr/");
+                        context.Response.End();
+                    }
 
-                if (path.StartsWith("/solr", StringComparison.InvariantCultureIgnoreCase))
-                {
                     var remoteUrl = $"{GetSolrServer()}{path}";
                     HttpWebRequest request = (HttpWebRequest)WebRequest.Create(remoteUrl);
                     HttpWebResponse response;
@@ -59,12 +58,14 @@ namespace Foundation.SorlProxy
                     return true;
                 }
 
+
+                else
+                {
+                    context.Response.Redirect("/sitecore/login");
+                    context.Response.End();
+                }
             }
-            else
-            {
-                context.Response.Redirect("/sitecore/login");
-                context.Response.End();
-            }
+
             return false;
         }
 
