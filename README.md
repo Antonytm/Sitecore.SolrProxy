@@ -27,3 +27,4 @@ By default module injects to HttpRequestBegin pipeline. But you can reconfigure 
 4. Open *Web.config* file and add handler *configuration>system.webServer>modules*
         `<add verb="*" path="solr/*" type="Foundation.SorlProxy.SolrHandler, Foundation.SorlProxy" name ="SolrHandler" />`
 5. Add *"/solr"* to IgnoreUrlPrefixes Sitecore setting (*Sitecore.config Sitecore>Settings>Setting[name="IgnoreUrlPrefixes"]*)
+6. Disable *Foundation.Solr.Proxy.config* configuration file
