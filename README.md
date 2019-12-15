@@ -19,3 +19,25 @@ Project is build following Helix principles, but you can use it in any Sitecore 
 ## How to use
 1. Download Sitecore update package from [AppVeyor](https://ci.appveyor.com/project/Antonytm/sitecore-solrproxy)
 2. Install it using update installation wizard /sitecore/admin/UpdateInstallationWizard.aspx
+3. Open url of Solr proxy https://yourwebsite/solr/
+
+### Optional steps
+By default module injects to HttpRequestBegin pipeline. But you can reconfigure it by registering http handler.
+
+4. Open *Web.config* file and add handler *configuration>system.webServer>modules*
+        `<add verb="*" path="solr/*" type="Foundation.SorlProxy.SolrHandler, Foundation.SorlProxy" name ="SolrHandler" />`
+5. Add *"/solr"* to IgnoreUrlPrefixes Sitecore setting (*Sitecore.config Sitecore>Settings>Setting[name="IgnoreUrlPrefixes"]*)
+6. Disable *Foundation.Solr.Proxy.config* configuration file
+
+
+## Possible issues
+
+1. If nothing happened after installation of package(/solr/ url doesn't work), check that *App_Config\Include\Foundation\Foundation.Solr.Proxy.config* configuration is enabled
+2. If you get "Too many redirects" then you have conflict with Solr console that requires trailing slash and your rewrite rules that force no trailing slash. Add rule that disable redirects for Solr console:
+
+```
+<rule name="Dont redirect Solr" stopProcessing="true">
+  <match url="^solr(.*)" />
+  <action type="None" />
+</rule>
+```
