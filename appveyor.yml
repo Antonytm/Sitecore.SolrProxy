@@ -5,7 +5,9 @@ artifacts:
 before_build:
   - nuget sources add -Name SitecorePublicFeed -Source https://sitecore.myget.org/F/sc-packages/api/v3/index.json
   - nuget restore Sitecore.SolrProxy.sln
-  - MSBuild.SonarQube.Runner.exe begin /k:"Sitecore.SolrProxy" /d:"sonar.host.url=https://sonarqube.com" /d:"sonar.login=%sonar_token%" /n:"Sitecore.SolrProxy" /o:"antonytm-github"
+  - SonarScanner.MSBuild.exe begin /k:"Sitecore.SolrProxy" /d:"sonar.host.url=https://sonarcloud.io" /d:"sonar.login=%sonar_token%" /n:"Sitecore.SolrProxy" /o:"antonytm-github"
+  - MSBuild.exe Sitecore.SolrProxy.sln /t:Rebuild /verbosity:quiet
+  - SonarScanner.MSBuild.exe end /d:"sonar.login=%sonar_token%"
 build:
   project: Sitecore.SolrProxy.sln
 after_build:
