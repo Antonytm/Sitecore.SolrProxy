@@ -32,7 +32,3 @@ install:
   - ps: Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
   - choco install sitecore-courier
   - choco install sonarscanner-msbuild-net46 -y
-  - cd "C:\Program Files\Java\jdk13"
-  - dir
-  - cd bin
-  - dir
