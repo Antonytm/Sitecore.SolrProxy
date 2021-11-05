@@ -7,22 +7,23 @@ namespace Foundation.SorlProxy
 {
     public class Proxy
     {
-        
+        public readonly string SolrSitecorePath = "/sitecore/shell/solr";
+        public readonly string SolrOriginPath = "/solr";
         public bool GetSolrResponse(ref HttpContext context)
         {
             
             var path = context.Request.Url.PathAndQuery;
-            if (path.StartsWith("/solr", StringComparison.InvariantCultureIgnoreCase))
+            if (path.StartsWith(SolrSitecorePath, StringComparison.InvariantCultureIgnoreCase))
             {
                 if (Sitecore.Context.User.IsInRole(@"sitecore\Developer") || Sitecore.Context.IsAdministrator)
                 {
-                    if (path.Equals("/solr", StringComparison.InvariantCultureIgnoreCase))
+                    if (path.Equals(SolrSitecorePath, StringComparison.InvariantCultureIgnoreCase))
                     {
-                        context.Response.Redirect("/solr/");
+                        context.Response.Redirect(SolrSitecorePath + "/");
                         context.Response.End();
                     }
 
-                    var remoteUrl = $"{GetSolrServer()}{path}";
+                    var remoteUrl = $"{GetSolrServer()}{path.Replace(SolrSitecorePath, SolrOriginPath)}";
                     HttpWebRequest request = (HttpWebRequest)WebRequest.Create(remoteUrl);
                     HttpWebResponse response;
                     try
@@ -73,7 +74,7 @@ namespace Foundation.SorlProxy
 
         private string GetSolrServer()
         {
-            return Sitecore.Configuration.Settings.GetSetting("ContentSearch.Solr.ServiceBaseAddress").Replace("/solr", "");
+            return System.Configuration.ConfigurationManager.ConnectionStrings["solr.search"].ConnectionString.Replace("/solr", "");
         }
     }
 }
