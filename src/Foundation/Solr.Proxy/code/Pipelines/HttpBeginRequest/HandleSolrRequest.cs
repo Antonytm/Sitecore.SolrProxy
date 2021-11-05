@@ -7,7 +7,7 @@ namespace Foundation.SorlProxy.Pipelines.HttpBeginRequest
         public override void Process(HttpRequestArgs args)
         {
             var proxy = new Proxy();
-            var argsContext = args.HttpContext;
+            var argsContext = args.HttpContext.ApplicationInstance.Context;
             if (proxy.GetSolrResponse(ref argsContext))
             {
                 args.AbortPipeline();
