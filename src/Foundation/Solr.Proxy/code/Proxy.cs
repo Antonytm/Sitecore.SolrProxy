@@ -7,7 +7,7 @@ namespace Foundation.SorlProxy
 {
     public class Proxy
     {
-        public bool GetSolrResponse(ref HttpContext context)
+        public bool GetSolrResponse(ref HttpContextBase context)
         {
             var path = context.Request.Url.PathAndQuery;
             if (path.StartsWith("/solr", StringComparison.InvariantCultureIgnoreCase))
