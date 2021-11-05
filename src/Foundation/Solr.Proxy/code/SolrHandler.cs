@@ -1,7 +1,7 @@
 ﻿using System.Web;
 using System.Web.SessionState;
 
-namespace Foundation.SorlProxy
+namespace Foundation.SolrProxy
 {
     public class SolrHandler : IHttpHandler, IRequiresSessionState
     {
