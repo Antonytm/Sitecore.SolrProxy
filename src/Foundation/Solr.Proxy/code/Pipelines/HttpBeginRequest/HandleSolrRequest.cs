@@ -1,6 +1,6 @@
 ﻿using Sitecore.Pipelines.HttpRequest;
 
-namespace Foundation.SorlProxy.Pipelines.HttpBeginRequest
+namespace Foundation.SolrProxy.Pipelines.HttpBeginRequest
 {
     public class HandleSolrRequest : HttpRequestProcessor
     {
