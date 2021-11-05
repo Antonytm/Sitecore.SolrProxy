@@ -1,3 +1,7 @@
 /src/Foundation/CSSGridLayout/code/bin
 /src/Project/Example/code/bin
-.vs/config/applicationhost.config
+.vs/*
+/packages/*
+/src/Foundation/Solr.Proxy/code/bin
+/src/Foundation/Solr.Proxy/code/obj
+/src/Foundation/Solr.Proxy/code/*.user
