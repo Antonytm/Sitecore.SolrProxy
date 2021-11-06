@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Net;
+using System.Text.RegularExpressions;
 using System.Web;
 
 namespace Foundation.SolrProxy
@@ -76,7 +77,11 @@ namespace Foundation.SolrProxy
 
         private static string GetSolrServer()
         {
-            return System.Configuration.ConfigurationManager.ConnectionStrings["solr.search"].ConnectionString.Replace("/solr", "");
+            var connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["solr.search"]
+                ?.ConnectionString;
+            var url = connectionString ?? Sitecore.Configuration.Settings.GetSetting("ContentSearch.Solr.ServiceBaseAddress");
+            var replace = new Regex("/solr$");
+            return replace.Replace(url, "");
         }
     }
 }
